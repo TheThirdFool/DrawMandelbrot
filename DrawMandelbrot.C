@@ -12,6 +12,7 @@ double pi = 3.14159265359;
 
 // ======================== STRUCTURES =======================
 
+// Complex number structure
 struct Complex{
 
 	// Constructor
@@ -44,8 +45,10 @@ struct Complex{
 	double y;
 };
 
+// 3D coordinate structure - for storing the data
 struct Coord{
 
+	// Constructor - generates the x & y axis.
 	Coord(double lowx, double highx, double lowy, double highy, double step){
 		numx = (highx - lowx) / step;
 		numy = (highy - lowy) / step;
@@ -68,6 +71,7 @@ struct Coord{
 		total = xcount;
 	}
 
+	// Print data to file
 	void FPrint(char * filename){
 		printf("Total = %i\n", total);
 
@@ -96,6 +100,7 @@ struct Coord{
 
 // ======================== FUNCTIONS ========================
 
+// Square complex numbers
 Complex Sq(Complex z){
 	Complex q;
 	q.x = pow(z.x,2.0) - pow(z.y, 2.0);
@@ -103,26 +108,24 @@ Complex Sq(Complex z){
 	return q;
 }
 
+// Add complex numbers
 Complex Add(Complex z, Complex q){
 	Complex p = Complex((z.x + q.x), (z.y + q.y));
 	return p;
 }
 
-
-double NoIt(Complex z, Complex c, double lim, double max){
-	
+// Return the number of iterations required for |z| > lim
+double NoIt(Complex z, Complex c, double lim, double max){	
 	double i = 0;
 	while(z.Mag() < lim){
 		z = Add(Sq(z),c);
-//		z.Print();
-//		printf("Count = %i\n",i);
 		if(i > max) return max;
 		i++;
 	}
-
 	return i;
 }
 
+// Get data for the Mandelbrot set
 void GetDataMB(Coord *Data, Complex m, double lim, double max){
 	int zcount = 0;
 	for(int i=0; i < Data->numx; i++){
@@ -137,6 +140,7 @@ void GetDataMB(Coord *Data, Complex m, double lim, double max){
 
 }
 
+// Get data for the Julia set
 void GetDataJ(Coord *Data, Complex m, double lim, double max){
 	int zcount = 0;
 	for(int i=0; i < Data->numx; i++){
@@ -151,6 +155,7 @@ void GetDataJ(Coord *Data, Complex m, double lim, double max){
 
 }
 
+// Generate and save data for Mandelbrot set
 void DrawMandelbrot(double xlow, double xhigh, double ylow, double yhigh, double step, double bound, double lim, char* filename){
 	Complex z = Complex(0.0, 0.0);
 	Coord Data = Coord(xlow, xhigh, ylow, yhigh, step);
@@ -158,6 +163,7 @@ void DrawMandelbrot(double xlow, double xhigh, double ylow, double yhigh, double
 	Data.FPrint(filename);
 }
 
+// Generate and save data for Julia set
 void DrawJulia(double xlow, double xhigh, double ylow, double yhigh, double step, double bound, double lim, char* filename){
 	Complex z = Complex(-0.8, 0.156);
 	Coord Data = Coord(xlow, xhigh, ylow, yhigh, step);
@@ -187,11 +193,6 @@ int main(int argc, char* argv[]){
 	printf("\n");
 
 	return 0.0;
-
-
-
-
-
 
 }
 
