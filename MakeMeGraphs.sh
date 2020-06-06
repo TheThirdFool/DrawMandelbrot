@@ -14,6 +14,6 @@ echo -e "Running '${RED}DrawMandelbrot.C${NC}'..."
 echo -e "Using gnuplot to make graphs..."
 gnuplot GRAPH.p
 
-echo "${RED}Finished${NC}!"
+echo -e "${RED}Finished${NC}!"
 echo ""
 
